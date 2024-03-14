@@ -3,7 +3,7 @@ package com.coderhouse;
 public class EjercicioEntrega {
 
 	public static void main(String[] args) {
-		float numero = (float) 9.145;
+		float numero = (float) 4.16;
 		
 		int numeroEntero = (int) numero;
 		byte numeroDecimal = (byte) ((numero - numeroEntero) * 100);
@@ -16,3 +16,5 @@ public class EjercicioEntrega {
 	}
 
 }
+
+
