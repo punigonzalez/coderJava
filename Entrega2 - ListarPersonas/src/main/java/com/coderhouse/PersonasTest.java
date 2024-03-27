@@ -16,7 +16,7 @@ public class PersonasTest {
         listaPersonas.add(persona1);
         
         Persona persona2 = new Persona();
-        persona2.setNombre("Leonardov");
+        persona2.setNombre("Leonardo");
         persona2.setApellido("Manriquez");
         listaPersonas.add(persona2);
         
