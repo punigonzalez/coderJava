@@ -1,4 +1,4 @@
-package com.coderhouse.controlador;
+package com.coderhouse.controladores;
 
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,5 +58,14 @@ public class ClienteController {
 	    }
 	}
 	
+	/*@PutMapping(value = "/{id}/editar", consumes= {MediaType.APPLICATION_JSON_VALUE} )
+	public ResponseEntity <Cliente> editarCliente(@PathVariable("id") Integer dni, @RequestBody Cliente cliente){
+		Cliente clienteEditado = clienteService.editarClientePorDni(dni, cliente);
+		if(clienteEditado != null) {
+			return new ResponseEntity<>(clienteEditado, HttpStatus.OK);
+			
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}}*/
 	
 }
