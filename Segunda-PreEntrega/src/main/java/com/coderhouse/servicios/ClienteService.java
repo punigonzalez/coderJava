@@ -1,6 +1,7 @@
 package com.coderhouse.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.coderhouse.modelos.Cliente;
@@ -16,8 +17,19 @@ public class ClienteService {
 		return clienteRepository.save(cliente);
 	}
 	
-	public Cliente mostrarClientePorDni(Integer dni) {  
-		return clienteRepository.findById(dni).orElse(null);
+	public Cliente mostrarClientePorId(Integer id) {  
+		return clienteRepository.findById(id).orElse(null);
 	}
 
+	public Cliente editarClientePorId (Integer id, Cliente cliente) {
+		try {
+			if (clienteRepository.existsById(id)) {
+				cliente.setDni(id);
+				return clienteRepository.save(cliente);
+			}
+		} catch(EmptyResultDataAccessException e){
+			return null;
+			}
+		return null;
+		}
 }

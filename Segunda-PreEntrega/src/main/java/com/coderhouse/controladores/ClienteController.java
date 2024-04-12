@@ -33,11 +33,12 @@ public class ClienteController {
 		return new ResponseEntity<>(cliente,HttpStatus.CREATED);
 	}
 	
-	@GetMapping(value="/{id}",produces= {MediaType.APPLICATION_JSON_VALUE})
+	/*@GetMapping(value="/{id}",produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Cliente> mostrarClientePorDni(@PathVariable("id") Integer dni) {
 		PreparedStatement statement = null;
 	    try {
-	        Cliente cliente = clienteService.mostrarClientePorDni(dni);
+	        Integer id = null;
+			Cliente cliente = clienteService.mostrarClientePorId(id);
 	        if (cliente != null) {
 	            // Calcular la edad del cliente
 	            LocalDate fechaNacimiento = cliente.getFechaNacimiento();
@@ -56,16 +57,16 @@ public class ClienteController {
 	    } catch (Exception e) {
 	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Error 500
 	    }
-	}
+	}*/
 	
-	/*@PutMapping(value = "/{id}/editar", consumes= {MediaType.APPLICATION_JSON_VALUE} )
-	public ResponseEntity <Cliente> editarCliente(@PathVariable("id") Integer dni, @RequestBody Cliente cliente){
-		Cliente clienteEditado = clienteService.editarClientePorDni(dni, cliente);
+	@PutMapping(value = "/{id}/editar", consumes= {MediaType.APPLICATION_JSON_VALUE} )
+	public ResponseEntity <Cliente> editarCliente(@PathVariable("id") Integer id, @RequestBody Cliente cliente){
+		Cliente clienteEditado = clienteService.editarClientePorId(id, cliente);
 		if(clienteEditado != null) {
 			return new ResponseEntity<>(clienteEditado, HttpStatus.OK);
 			
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}}*/
+		}}
 	
 }
