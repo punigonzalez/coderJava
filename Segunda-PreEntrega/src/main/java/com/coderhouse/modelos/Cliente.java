@@ -26,8 +26,8 @@ public class Cliente {
 	private String apellido;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID COMPRA")
-	private Integer idCompra;
+	@Column(name="ID_COMPRA")
+	private Integer id_Compra;
 	
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Venta venta;
@@ -75,15 +75,19 @@ public class Cliente {
 
 
 
-	public Integer getIdCompra() {
-		return idCompra;
+	public Integer getId_Compra() {
+		return id_Compra;
 	}
 
 
 
-	public void setIdCompra(Integer idCompra) {
-		this.idCompra = idCompra;
+	public void setId_Compra(Integer id_Compra) {
+		this.id_Compra = id_Compra;
 	}
+
+
+
+	
 
 	
 	

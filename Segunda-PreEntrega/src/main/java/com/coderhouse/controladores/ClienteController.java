@@ -1,17 +1,15 @@
 package com.coderhouse.controladores;
 
-import java.sql.PreparedStatement;
-import java.time.LocalDate;
-import java.time.Period;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,53 +18,57 @@ import com.coderhouse.modelos.Cliente;
 import com.coderhouse.servicios.ClienteService;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 
 
 public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-	@PostMapping (value="/agregar",consumes = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value="/",produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<Cliente>> listarClientes(){
+		try {
+			List<Cliente> cliente = clienteService.listarClientes();
+			return new ResponseEntity<>(cliente,HttpStatus.OK);
+			
+			
+		}catch(Exception e) {
+			return new ResponseEntity <>(HttpStatus.INTERNAL_SERVER_ERROR); // error 500
+			
+		}
+	}
+	
+	@GetMapping(value="/{id}",produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Cliente> mostrarClientePorId(@PathVariable("id")Integer id){
+		try {
+			
+			Cliente cliente = clienteService.mostrarClientePorId(id);
+			if(cliente != null) {return new ResponseEntity<>(cliente,HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(cliente, HttpStatus.NOT_FOUND);}   //  error 404
+			
+		}catch(Exception e) {
+			return new ResponseEntity <>(HttpStatus.INTERNAL_SERVER_ERROR); // error 500
+			
+		}
+	}
+	
+	
+	@PostMapping (value="/agregarCliente",consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity <Cliente> agregarCliente( @RequestBody Cliente cliente){
 		clienteService.agregarCliente(cliente);
 		return new ResponseEntity<>(cliente,HttpStatus.CREATED);
-	}
+	}	
 	
-	/*@GetMapping(value="/{id}",produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<Cliente> mostrarClientePorDni(@PathVariable("id") Integer dni) {
-		PreparedStatement statement = null;
-	    try {
-	        Integer id = null;
-			Cliente cliente = clienteService.mostrarClientePorId(id);
-	        if (cliente != null) {
-	            // Calcular la edad del cliente
-	            LocalDate fechaNacimiento = cliente.getFechaNacimiento();
-	            int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
-	            
-	            // Establecer la edad calculada en el objeto Cliente
-	            cliente.setEdad(edad);
-	            statement.setInt(cliente.getEdad(), edad);
-	            
-	            
-	            
-	            return new ResponseEntity<>(cliente, HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Error 404
-	        }
-	    } catch (Exception e) {
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Error 500
-	    }
-	}*/
-	
-	@PutMapping(value = "/{id}/editar", consumes= {MediaType.APPLICATION_JSON_VALUE} )
-	public ResponseEntity <Cliente> editarCliente(@PathVariable("id") Integer id, @RequestBody Cliente cliente){
-		Cliente clienteEditado = clienteService.editarClientePorId(id, cliente);
-		if(clienteEditado != null) {
-			return new ResponseEntity<>(clienteEditado, HttpStatus.OK);
-			
+	@DeleteMapping(value= "/{id}/eliminar")
+	public ResponseEntity<Void> eliminarProducto(@PathVariable("id") Integer id){
+		boolean eliminado = clienteService.elimarClientePorId(id);
+		if (eliminado) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT)	;		// código 204
 		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);         // error 404
 		}}
+	
+	
 	
 }

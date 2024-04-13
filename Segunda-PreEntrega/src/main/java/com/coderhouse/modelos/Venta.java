@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 		
 		
 		@OneToOne
-	    @JoinColumn(name = "NUMERO_DE_COMPRA", referencedColumnName = "ID COMPRA")
+	    @JoinColumn(name = "ID_COMPRA", referencedColumnName = "ID_COMPRA")
 	    private Cliente cliente;
 		
 		

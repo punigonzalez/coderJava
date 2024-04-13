@@ -15,6 +15,8 @@ public class Proveedor {
 	@Column(name="ID PROVEEDOR")
 	private Integer id_proveedor;
 	
+	@Column(name="NOMBRE")
+	private String nombre;
 	
 	@OneToOne
     @JoinColumn(name = "ID PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
@@ -44,6 +46,16 @@ public class Proveedor {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	
